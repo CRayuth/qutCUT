@@ -1,0 +1,76 @@
+<UserControl
+    x:Class="qutCUT.MediaPanel.MediaPanelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="{StaticResource AppBgSecondary}"
+            BorderBrush="{StaticResource AppBorderSubtle}"
+            BorderThickness="0,0,1,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>   <!-- Search bar -->
+                <RowDefinition Height="Auto"/>   <!-- Tab bar -->
+                <RowDefinition Height="*"/>      <!-- Content -->
+            </Grid.RowDefinitions>
+
+            <!-- Search bar -->
+            <TextBox Grid.Row="0"
+                     PlaceholderText="Search media…"
+                     Margin="12,8"
+                     Text="{x:Bind SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Background="{StaticResource AppBgTertiary}"
+                     Foreground="{StaticResource AppTextPrimary}"/>
+
+            <!-- Tabs: Media | Captions | Music -->
+            <TabView Grid.Row="1" x:Name="Tabs"
+                     IsAddTabButtonVisible="False"
+                     Background="Transparent">
+                <TabViewItem Header="Media" IsClosable="False"/>
+                <TabViewItem Header="Captions" IsClosable="False"/>
+                <TabViewItem Header="Music" IsClosable="False"/>
+            </TabView>
+
+            <!-- Asset grid -->
+            <GridView Grid.Row="2" x:Name="AssetGrid"
+                      ItemsSource="{x:Bind FilteredAssets, Mode=OneWay}"
+                      SelectionMode="Multiple"
+                      AllowDrop="True"
+                      DragItemsStarting="OnDragStart"
+                      Drop="OnDrop"
+                      DragOver="OnDragOver">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="100" Height="76" CornerRadius="6"
+                                Background="{StaticResource AppBgTertiary}"
+                                Margin="4">
+                            <Grid>
+                                <!-- Thumbnail placeholder -->
+                                <Rectangle Fill="{StaticResource AppBgElevated}" RadiusX="6" RadiusY="6"/>
+                                <!-- Asset name -->
+                                <TextBlock Text="{Binding Name}"
+                                           FontSize="10"
+                                           Foreground="{StaticResource AppTextSecondary}"
+                                           TextWrapping="Wrap"
+                                           VerticalAlignment="Bottom"
+                                           Margin="6,4"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+            <!-- Import drop target overlay -->
+            <Border Grid.Row="2" x:Name="DropOverlay"
+                    Background="#20FFFFFF"
+                    CornerRadius="8"
+                    Margin="8"
+                    Visibility="Collapsed">
+                <TextBlock Text="Drop media here"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource AppTextSecondary}"
+                           FontSize="13"/>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,115 @@
+<UserControl
+    x:Class="qutCUT.Editor.EditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:media="using:qutCUT.MediaPanel"
+    xmlns:timeline="using:qutCUT.Timeline"
+    xmlns:preview="using:qutCUT.Preview"
+    xmlns:inspector="using:qutCUT.Inspector"
+    xmlns:agent="using:qutCUT.Agent">
+
+    <!-- 4-pane layout: MediaPanel | Preview | Inspector | Timeline (bottom) -->
+    <Grid Background="{StaticResource AppBgPrimary}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>      <!-- Toolbar -->
+            <RowDefinition Height="*"/>       <!-- Main content -->
+            <RowDefinition Height="220"/>     <!-- Timeline -->
+        </Grid.RowDefinitions>
+
+        <!-- ── Toolbar ─────────────────────────────────── -->
+        <Border Grid.Row="0"
+                Background="{StaticResource AppBgSecondary}"
+                BorderBrush="{StaticResource AppBorderSubtle}"
+                BorderThickness="0,0,0,1">
+            <Grid Padding="12,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left: tool buttons -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4"
+                            VerticalAlignment="Center">
+                    <ToggleButton x:Name="SelectToolBtn" Content="↖" ToolTipService.ToolTip="Select (V)"
+                                  IsChecked="{x:Bind IsSelectTool, Mode=OneWay}"
+                                  Click="OnSelectTool" Width="28" Height="28"/>
+                    <ToggleButton x:Name="RazorToolBtn" Content="✂" ToolTipService.ToolTip="Razor (C)"
+                                  IsChecked="{x:Bind IsRazorTool, Mode=OneWay}"
+                                  Click="OnRazorTool" Width="28" Height="28"/>
+                    <ToggleButton x:Name="TextToolBtn" Content="T" ToolTipService.ToolTip="Text (T)"
+                                  IsChecked="{x:Bind IsTextTool, Mode=OneWay}"
+                                  Click="OnTextTool" Width="28" Height="28"/>
+                </StackPanel>
+
+                <!-- Center: playback controls -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                            VerticalAlignment="Center">
+                    <Button Content="⏮" Click="OnSeekStart" Width="28" Height="28"
+                            ToolTipService.ToolTip="Go to Start (Home)"/>
+                    <Button Content="⏪" Click="OnStepBack" Width="28" Height="28"/>
+                    <Button x:Name="PlayBtn"
+                            Content="{x:Bind PlayButtonLabel, Mode=OneWay}"
+                            Click="OnTogglePlay"
+                            Width="36" Height="28"
+                            Background="{StaticResource AppAccent}"
+                            Foreground="White"/>
+                    <Button Content="⏩" Click="OnStepForward" Width="28" Height="28"/>
+                    <Button Content="⏭" Click="OnSeekEnd" Width="28" Height="28"
+                            ToolTipService.ToolTip="Go to End (End)"/>
+
+                    <TextBlock x:Name="TimecodeLabel"
+                               Text="{x:Bind Timecode, Mode=OneWay}"
+                               FontFamily="Consolas" FontSize="13"
+                               Foreground="{StaticResource AppTextPrimary}"
+                               VerticalAlignment="Center" MinWidth="100"
+                               TextAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Right: panel toggles + export -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4"
+                            HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <ToggleButton Content="Media" IsChecked="{x:Bind ViewModel.MediaPanelVisible, Mode=TwoWay}"/>
+                    <ToggleButton Content="Inspector" IsChecked="{x:Bind ViewModel.InspectorVisible, Mode=TwoWay}"/>
+                    <ToggleButton Content="AI" IsChecked="{x:Bind ViewModel.AgentPanelVisible, Mode=TwoWay}"/>
+                    <Button Content="Export…" Click="OnExport"
+                            Background="{StaticResource AppAccent}" Foreground="White"
+                            CornerRadius="6" Padding="12,4" Margin="8,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ── Main content area ───────────────────────── -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{x:Bind MediaPanelWidth, Mode=OneWay}"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{x:Bind InspectorWidth, Mode=OneWay}"/>
+                <ColumnDefinition Width="{x:Bind AgentPanelWidth, Mode=OneWay}"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Media panel -->
+            <media:MediaPanelView Grid.Column="0" ViewModel="{x:Bind ViewModel, Mode=OneWay}"
+                                  Visibility="{x:Bind MediaPanelVisibility, Mode=OneWay}"/>
+
+            <!-- Preview -->
+            <preview:PreviewView Grid.Column="1" ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+
+            <!-- Inspector -->
+            <inspector:InspectorView Grid.Column="2" ViewModel="{x:Bind ViewModel, Mode=OneWay}"
+                                     Visibility="{x:Bind InspectorVisibility, Mode=OneWay}"/>
+
+            <!-- Agent panel -->
+            <agent:AgentPanelView Grid.Column="3" ViewModel="{x:Bind ViewModel, Mode=OneWay}"
+                                  Visibility="{x:Bind AgentPanelVisibility, Mode=OneWay}"/>
+        </Grid>
+
+        <!-- ── Timeline ────────────────────────────────── -->
+        <Border Grid.Row="2"
+                Background="{StaticResource AppBgSecondary}"
+                BorderBrush="{StaticResource AppBorderSubtle}"
+                BorderThickness="0,1,0,0">
+            <timeline:TimelineView ViewModel="{x:Bind ViewModel, Mode=OneWay}"/>
+        </Border>
+    </Grid>
+</UserControl>

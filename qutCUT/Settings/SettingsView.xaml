@@ -1,0 +1,88 @@
+<ContentDialog
+    x:Class="qutCUT.Settings.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Settings"
+    CloseButtonText="Done"
+    DefaultButton="Close"
+    MinWidth="520">
+
+    <TabView IsAddTabButtonVisible="False" Height="420">
+
+        <!-- Account tab -->
+        <TabViewItem Header="Account" IsClosable="False">
+            <StackPanel Padding="16" Spacing="16">
+                <TextBlock Text="Account" FontSize="16" FontWeight="SemiBold"
+                           Foreground="{StaticResource AppTextPrimary}"/>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Email" FontSize="11"
+                               Foreground="{StaticResource AppTextTertiary}"/>
+                    <TextBlock x:Name="EmailLabel" FontSize="13"
+                               Foreground="{StaticResource AppTextPrimary}"/>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Plan" FontSize="11"
+                               Foreground="{StaticResource AppTextTertiary}"/>
+                    <TextBlock x:Name="TierLabel" FontSize="13"
+                               Foreground="{StaticResource AppTextPrimary}"/>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Credits" FontSize="11"
+                               Foreground="{StaticResource AppTextTertiary}"/>
+                    <TextBlock x:Name="CreditsLabel" FontSize="13"
+                               Foreground="{StaticResource AppTextPrimary}"/>
+                </StackPanel>
+
+                <Button Content="Sign Out" Click="OnSignOut"
+                        Foreground="White" CornerRadius="6"
+                        Background="{StaticResource AppBgElevated}"/>
+            </StackPanel>
+        </TabViewItem>
+
+        <!-- Agent tab -->
+        <TabViewItem Header="AI Agent" IsClosable="False">
+            <StackPanel Padding="16" Spacing="16">
+                <TextBlock Text="Claude API" FontSize="16" FontWeight="SemiBold"
+                           Foreground="{StaticResource AppTextPrimary}"/>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="API Key" FontSize="11"
+                               Foreground="{StaticResource AppTextTertiary}"/>
+                    <PasswordBox x:Name="ApiKeyBox"
+                                 PlaceholderText="sk-ant-..."
+                                 PasswordChanged="OnApiKeyChanged"/>
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Default Model" FontSize="11"
+                               Foreground="{StaticResource AppTextTertiary}"/>
+                    <ComboBox x:Name="ModelPicker" SelectionChanged="OnModelChanged">
+                        <ComboBoxItem Content="Claude Haiku 4.5 — Fastest"/>
+                        <ComboBoxItem Content="Claude Sonnet 4.6 — Balanced" IsSelected="True"/>
+                        <ComboBoxItem Content="Claude Opus 4.8 — Most capable"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </TabViewItem>
+
+        <!-- Storage tab -->
+        <TabViewItem Header="Storage" IsClosable="False">
+            <StackPanel Padding="16" Spacing="16">
+                <TextBlock Text="Storage" FontSize="16" FontWeight="SemiBold"
+                           Foreground="{StaticResource AppTextPrimary}"/>
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Generated media cache" FontSize="11"
+                               Foreground="{StaticResource AppTextTertiary}"/>
+                    <TextBlock x:Name="CachePathLabel" FontSize="11"
+                               Foreground="{StaticResource AppTextSecondary}"/>
+                </StackPanel>
+                <Button Content="Clear Cache" Click="OnClearCache"
+                        Background="{StaticResource AppBgElevated}"
+                        Foreground="{StaticResource AppTextPrimary}"/>
+            </StackPanel>
+        </TabViewItem>
+    </TabView>
+</ContentDialog>

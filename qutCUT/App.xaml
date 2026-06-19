@@ -1,0 +1,28 @@
+<Application
+    x:Class="qutCUT.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- App-wide brushes from AppTheme.cs -->
+            <SolidColorBrush x:Key="AppBgPrimary"   Color="#FF121214"/>
+            <SolidColorBrush x:Key="AppBgSecondary" Color="#FF1A1A1E"/>
+            <SolidColorBrush x:Key="AppBgTertiary"  Color="#FF24242A"/>
+            <SolidColorBrush x:Key="AppBgElevated"  Color="#FF2E2E36"/>
+            <SolidColorBrush x:Key="AppAccent"       Color="#FF6366F1"/>
+            <SolidColorBrush x:Key="AppTextPrimary"  Color="#FFF8F8FC"/>
+            <SolidColorBrush x:Key="AppTextSecondary" Color="#C8B4B4C4"/>
+            <SolidColorBrush x:Key="AppTextTertiary"  Color="#9682829C"/>
+            <SolidColorBrush x:Key="AppBorderSubtle"  Color="#1EFFFFFF"/>
+            <SolidColorBrush x:Key="AppBorderDefault" Color="#3CFFFFFF"/>
+
+            <!-- Override default dark theme system colors -->
+            <Color x:Key="SystemAccentColor">#6366F1</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

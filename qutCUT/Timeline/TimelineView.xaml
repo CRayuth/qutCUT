@@ -1,0 +1,74 @@
+<UserControl
+    x:Class="qutCUT.Timeline.TimelineView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Timeline: ruler + scrollable track area + playhead -->
+    <Grid Background="{StaticResource AppBgSecondary}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>   <!-- Ruler / header -->
+            <RowDefinition Height="*"/>    <!-- Tracks -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>  <!-- Track label sidebar -->
+            <ColumnDefinition Width="*"/>    <!-- Scrollable clip area -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Track label header corner -->
+        <Border Grid.Row="0" Grid.Column="0"
+                Background="{StaticResource AppBgTertiary}"
+                BorderBrush="{StaticResource AppBorderSubtle}"
+                BorderThickness="0,0,1,1">
+            <StackPanel Orientation="Horizontal" Padding="8,0" Spacing="4"
+                        VerticalAlignment="Center">
+                <Button Content="+" Click="OnAddTrack"
+                        Width="20" Height="20" Padding="0" FontSize="11"/>
+                <TextBlock Text="Tracks" FontSize="11"
+                           Foreground="{StaticResource AppTextTertiary}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Ruler -->
+        <Canvas Grid.Row="0" Grid.Column="1" x:Name="RulerCanvas"
+                Background="{StaticResource AppBgTertiary}"
+                PointerPressed="OnRulerScrub"/>
+
+        <!-- Track labels -->
+        <ItemsControl Grid.Row="1" Grid.Column="0" x:Name="TrackLabels"
+                      ItemsSource="{x:Bind Tracks, Mode=OneWay}"
+                      Background="{StaticResource AppBgTertiary}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Height="52" BorderBrush="{StaticResource AppBorderSubtle}"
+                            BorderThickness="0,0,1,1" Padding="8,0">
+                        <TextBlock Text="{Binding Name}"
+                                   FontSize="11"
+                                   Foreground="{StaticResource AppTextSecondary}"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Scrollable clip area -->
+        <ScrollViewer Grid.Row="1" Grid.Column="1"
+                      x:Name="ClipScroll"
+                      HorizontalScrollMode="Enabled"
+                      VerticalScrollMode="Enabled"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <Canvas x:Name="ClipCanvas"
+                    AllowDrop="True"
+                    PointerPressed="OnClipCanvasPress"
+                    PointerMoved="OnClipCanvasMove"
+                    PointerReleased="OnClipCanvasRelease"
+                    DragOver="OnClipDragOver"
+                    Drop="OnClipDrop"/>
+        </ScrollViewer>
+
+        <!-- Playhead overlay -->
+        <Canvas Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"
+                x:Name="PlayheadCanvas" IsHitTestVisible="False"/>
+    </Grid>
+</UserControl>

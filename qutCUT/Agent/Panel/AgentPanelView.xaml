@@ -1,0 +1,88 @@
+<UserControl
+    x:Class="qutCUT.Agent.Panel.AgentPanelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border Background="{StaticResource AppBgSecondary}"
+            BorderBrush="{StaticResource AppBorderSubtle}"
+            BorderThickness="1,0,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>   <!-- Header -->
+                <RowDefinition Height="*"/>      <!-- Messages -->
+                <RowDefinition Height="Auto"/>   <!-- Input -->
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0" Padding="12,10"
+                    BorderBrush="{StaticResource AppBorderSubtle}"
+                    BorderThickness="0,0,0,1">
+                <Grid>
+                    <TextBlock Text="AI Agent" FontSize="13" FontWeight="SemiBold"
+                               Foreground="{StaticResource AppTextPrimary}"
+                               VerticalAlignment="Center"/>
+                    <ComboBox x:Name="ModelPicker"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              FontSize="11"
+                              SelectionChanged="OnModelChanged">
+                        <ComboBoxItem Content="Haiku 4.5" Tag="Haiku45"/>
+                        <ComboBoxItem Content="Sonnet 4.6" Tag="Sonnet46" IsSelected="True"/>
+                        <ComboBoxItem Content="Opus 4.8" Tag="Opus48"/>
+                    </ComboBox>
+                </Grid>
+            </Border>
+
+            <!-- Message list -->
+            <ScrollViewer Grid.Row="1" x:Name="MessagesScroll" Padding="12">
+                <ItemsControl x:Name="MessageList"
+                              ItemsSource="{x:Bind Messages, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,4"
+                                    Padding="10,8"
+                                    CornerRadius="8"
+                                    MaxWidth="280"
+                                    HorizontalAlignment="{Binding HorizontalAlignment}">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding BubbleColor}"/>
+                                </Border.Background>
+                                <TextBlock Text="{Binding Content}"
+                                           TextWrapping="Wrap"
+                                           FontSize="12"
+                                           Foreground="{StaticResource AppTextPrimary}"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Input area -->
+            <Border Grid.Row="2" Padding="12,8"
+                    BorderBrush="{StaticResource AppBorderSubtle}"
+                    BorderThickness="0,1,0,0">
+                <Grid ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="InputBox"
+                             PlaceholderText="Ask Claude to edit your video…"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="False"
+                             MaxHeight="120"
+                             Background="{StaticResource AppBgTertiary}"
+                             Foreground="{StaticResource AppTextPrimary}"
+                             KeyDown="OnInputKeyDown"/>
+                    <Button Grid.Column="1" Content="Send"
+                            Click="OnSend"
+                            Background="{StaticResource AppAccent}"
+                            Foreground="White"
+                            CornerRadius="6"
+                            IsEnabled="{x:Bind CanSend, Mode=OneWay}"
+                            VerticalAlignment="Bottom"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,21 @@
+<Window
+    x:Class="qutCUT.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:qutCUT"
+    xmlns:project="using:qutCUT.Project"
+    xmlns:editor="using:qutCUT.Editor"
+    Title="qutCUT">
+
+    <Grid Background="{StaticResource AppBgPrimary}">
+        <!-- Home screen (shown when no project is open) -->
+        <project:HomeView
+            x:Name="HomeView"
+            Visibility="{x:Bind ShowHome, Mode=OneWay}"/>
+
+        <!-- Editor (shown when a project is open) -->
+        <editor:EditorView
+            x:Name="EditorView"
+            Visibility="{x:Bind ShowEditor, Mode=OneWay}"/>
+    </Grid>
+</Window>
