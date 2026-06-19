@@ -1,7 +1,7 @@
 using qutCUT.Models;
 using qutCUT.Utilities;
 
-namespace qutCUT.Timeline;
+namespace qutCUT.TimelinePanel;
 
 public sealed class SnapResult
 {

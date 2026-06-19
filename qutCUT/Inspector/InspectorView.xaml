@@ -56,7 +56,7 @@
 
                     <StackPanel Spacing="4">
                         <TextBlock Text="Rotation" FontSize="10" Foreground="{StaticResource AppTextTertiary}"/>
-                        <NumberBox x:Name="Rotation" Minimum="-180" Maximum="180"
+                        <NumberBox x:Name="RotationBox" Minimum="-180" Maximum="180"
                                    SpinButtonPlacementMode="Inline"
                                    ValueChanged="OnRotationChanged"/>
                     </StackPanel>

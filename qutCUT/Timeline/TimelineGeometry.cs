@@ -1,6 +1,6 @@
 using qutCUT.Utilities;
 
-namespace qutCUT.Timeline;
+namespace qutCUT.TimelinePanel;
 
 public sealed class TimelineGeometry(double pixelsPerFrame, double headerHeight, double trackHeight)
 {

@@ -9,7 +9,7 @@ using qutCUT.Models;
 using qutCUT.Utilities;
 using Windows.Foundation;
 
-namespace qutCUT.Timeline;
+namespace qutCUT.TimelinePanel;
 
 public sealed partial class TimelineView : UserControl
 {

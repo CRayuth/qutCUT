@@ -45,7 +45,7 @@ public sealed partial class InspectorView : UserControl
         TransformY.Value = clip.Transform.Y;
         ScaleX.Value     = clip.Transform.ScaleX;
         ScaleY.Value     = clip.Transform.ScaleY;
-        Rotation.Value   = clip.Transform.Rotation;
+        RotationBox.Value = clip.Transform.Rotation;
         OpacitySlider.Value = clip.Opacity;
         VolumeSlider.Value  = clip.Volume;
         SpeedBox.Value      = clip.Speed;

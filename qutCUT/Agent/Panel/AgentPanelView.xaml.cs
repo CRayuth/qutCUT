@@ -8,7 +8,7 @@ using qutCUT.Editor;
 namespace qutCUT.Agent.Panel;
 
 // Simple bubble model for the list
-internal sealed class MessageBubble(string content, bool isUser)
+public sealed class MessageBubble(string content, bool isUser)
 {
     public string Content { get; } = content;
     public HorizontalAlignment HorizontalAlignment { get; } = isUser ? HorizontalAlignment.Right : HorizontalAlignment.Left;
